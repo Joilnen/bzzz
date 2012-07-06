@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 import android.view.MotionEvent;
+import android.view.KeyEvent;
 import android.widget.Toast;
 import android.util.Log;
 import android.media.AudioManager;
@@ -151,6 +152,19 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+	}
+
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		if(keyCode == KeyEvent.KEYCODE_BACK && renderView != null) {
+			menuView = new MenuView(this);
+			menuView.setOnTouchListener(this);
+			setContentView(menuView);
+			renderView = null;
+			return true;
+		}
+
+		return super.onKeyDown(keyCode, event);
 	}
 
 	public  class MenuView extends View implements OnTouchListener {
