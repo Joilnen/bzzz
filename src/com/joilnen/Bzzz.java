@@ -154,7 +154,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 	}
 
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		
 		if(keyCode == KeyEvent.KEYCODE_BACK && renderView != null) {
 			menuView = new MenuView(this);
@@ -164,8 +164,14 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 			return true;
 		}
 
-		return super.onKeyDown(keyCode, event);
+		return super.onKeyUp(keyCode, event);
 	}
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		return true;
+	}
+
+
 
 	public  class MenuView extends View implements OnTouchListener {
 
