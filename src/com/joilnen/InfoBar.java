@@ -9,15 +9,17 @@ class InfoBar {
 	private int cakeState = 100;
 
 	private RenderView renderView;
-	private Canvas canvas;
 
-	public InfoBar(RenderView renderView, Canvas canvas) {
+	public InfoBar(RenderView renderView) {
 		this.renderView = renderView;
-		this.canvas = canvas;
 	}
 
 	public void increment(int value) {
+		count += value;
+	}
 
+	public void increment() {
+		increment(1);
 	}
 
 	public void clear() {
@@ -28,9 +30,9 @@ class InfoBar {
 
 	}
 
-	public void draw() {
+	public void draw(Canvas canvas) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(9999);
+		sb.append(count);
 		canvas.drawText(sb.toString(), 280, 20, new Paint());
 	}
 }

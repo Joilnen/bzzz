@@ -12,17 +12,16 @@ import com.joilnen.Bolo;
 class  DrawGameHelper {
 
 	private RenderView renderView;
-	private Canvas canvas;
+	private InfoBar infoBar;
 
-	public DrawGameHelper(RenderView renderView, Canvas canvas) {
-		this.canvas = canvas;
+	public DrawGameHelper(RenderView renderView) {
 		this.renderView = renderView;
+		this.infoBar =	new InfoBar(renderView);
 	}
 
-	public void draw() {
+	public void draw(Canvas canvas) {
 		canvas.drawRGB(255, 255, 255);
 		try {
-			new InfoBar(renderView, canvas).draw();
 			canvas.drawBitmap(renderView.bolo.getBitmap(), 10, 310, null);
 			for(Mosca it:renderView.moscas) {
 				if(it.getY() < 450) 
@@ -67,13 +66,19 @@ class  DrawGameHelper {
 			}
 
 
-			for(Mosca it:renderView.moscas) 
-				if(it.getStatus() == SkinType.MORRENDO)
+			for(Mosca it:renderView.moscas) {
+				if(it.getStatus() == SkinType.MORRENDO)  {
 					renderView.moscas.remove(it);
+					infoBar.increment(10);
+				}
+			}
 	
-			for(Mosca it:renderView.moscas2) 
-				if(it.getStatus() == SkinType.MORRENDO)
+			for(Mosca it:renderView.moscas2) {
+				if(it.getStatus() == SkinType.MORRENDO) {
 					renderView.moscas2.remove(it);
+					infoBar.increment(10);
+				}
+			}
 
 			/*** Rever codigo com bug recriacao das moscas
 
@@ -83,6 +88,7 @@ class  DrawGameHelper {
 				}
 			}
 			***/
+			infoBar.draw(canvas);
 
 		}
 		catch(Exception e) {

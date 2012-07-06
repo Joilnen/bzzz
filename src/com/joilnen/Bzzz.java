@@ -43,6 +43,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 {
 	RenderView renderView = null;
 	MenuView menuView = null;
+	DrawGameHelper drawHelper = null;
 
 	public  class RenderView extends View implements OnTouchListener {
 
@@ -85,10 +86,11 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 			}
 
 			gameState = new GameState<Integer>(GameStateType.IN_MENU);
+			drawHelper = new DrawGameHelper(this);
 		}
 
 		protected void onDraw(Canvas canvas) {
-			new DrawGameHelper(this, canvas).draw();
+			drawHelper.draw(canvas);
 			invalidate();
 		}
 
@@ -113,28 +115,34 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
-		if(event.getX() > 91 && event.getX() < 248  &&
-		   event.getY() > 235 && event.getY() < 315) {
-			SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.PLUK);
-			menuView.setOnTouchListener(null);
-			menuView = null;
+		if(renderView == null) {
+			if(event.getX() > 91 && event.getX() < 248  &&
+			   event.getY() > 235 && event.getY() < 315) {
+				SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.PLUK);
 
-			renderView = new RenderView(this);
-			renderView.setOnTouchListener(this);
-			setContentView(renderView);
-			// Paint p = new Paint();
-			// p.setStyle(Style.STROKE);
-			// v.getCanvas().drawRect(91, 248, 235, 315, p);
-		}
-		else if(event.getX() > 115 && event.getX() < 215  &&
-		   	event.getY() > 348 && event.getY() < 395 && renderView != null) {
-			SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.PLUK);
-			finish();
-		}
+				renderView = new RenderView(this);
+				renderView.setOnTouchListener(this);
+				setContentView(renderView);
+			}
+			else if(event.getX() > 115 && event.getX() < 215  &&
+				event.getY() > 348 && event.getY() < 395) {
+				SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.PLUK);
+				finish();
+			}
 
-		// setContentView(renderView);
-		Log.d("Bzzz", "Tocou no menu");
-		return renderView.onTouch(v, event);
+			return true;
+		}
+		else {
+			switch(event.getAction()) {
+				case MotionEvent.ACTION_CANCEL:
+					menuView = new MenuView(this);
+					menuView.setOnTouchListener(this);
+					setContentView(menuView);
+					renderView = null;
+					return true;
+			}
+			return renderView.onTouch(v, event);
+		}
 	}
 
 	public void onSensorChanged(SensorEvent event) {
