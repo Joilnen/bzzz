@@ -9,6 +9,8 @@ import com.joilnen.Mosca;
 import com.joilnen.BigMosca;
 import com.joilnen.Bolo;
 
+import java.util.Random;
+
 class  DrawGameHelper {
 
 	private RenderView renderView;
@@ -76,8 +78,18 @@ class  DrawGameHelper {
 			for(Mosca it:renderView.moscas2) {
 				if(it.getStatus() == SkinType.MORRENDO) {
 					renderView.moscas2.remove(it);
-					infoBar.increment(10);
+					infoBar.increment(10);		
 				}
+			}
+
+			if(renderView.moscas.size() < 6) {
+				// for(int i = 0; i < 6; i++) {
+					int i = new Random().nextInt(10);;
+					Mosca m = new Mosca(this.renderView.getContext());
+					if((i % 3) == 0) m.setStatus(SkinType.VOANDO_D);
+					else m.setStatus(SkinType.VOANDO_E);
+					renderView.moscas.add(m);
+				// }
 			}
 
 			/*** Rever codigo com bug recriacao das moscas

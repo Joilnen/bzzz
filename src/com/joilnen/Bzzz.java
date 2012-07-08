@@ -62,9 +62,9 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		RenderView(Context context) {
 			super(context);
 			try {
-				for(int i = 0; i < 3; i++) {
+				for(int i = 0; i < 6; i++) {
 					Mosca m = new Mosca(context);
-					if(i == 0 || i == 3 || i == 6) m.setStatus(SkinType.VOANDO_D);
+					if((i % 3) == 0) m.setStatus(SkinType.VOANDO_D);
 					else m.setStatus(SkinType.VOANDO_E);
 					moscas.add(m);
 				}
