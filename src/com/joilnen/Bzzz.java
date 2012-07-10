@@ -105,6 +105,18 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		menuView = new MenuView(this);
 		menuView.setOnTouchListener(this);
 		setContentView(menuView);
+		SoundEfect.getSingleton(this);
+	}
+
+	// Nao funciounou vai saber pq :(
+	protected void onResume() {
+		super.onResume();
+		SoundEfect.getSingleton(this).playMusic();
+	}
+
+	protected void onPause() {
+		super.onPause();
+		SoundEfect.getSingleton(this).playMusic();
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
@@ -124,7 +136,8 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 				event.getY() > menuView.sair_y &&
 				event.getY() < menuView.sair_y + menuView.sairBitmap.getHeight() - 10) {
 
-				SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.PLUK);
+				SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.SAIR);
+				SoundEfect.getSingleton(v.getContext()).stopMusic();
 				finish();
 			}
 
