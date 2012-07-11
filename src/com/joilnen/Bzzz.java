@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -109,9 +110,9 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 	public boolean onTouch(View v, MotionEvent event) {
 		if(renderView == null) {
 			if(event.getX() > menuView.jogar_x &&
-			   event.getX() < menuView.jogar_x + menuView.jogarBitmap.getWidth() &&
+			   event.getX() < menuView.jogar_x + menuView.jogarBitmap.getWidth() - 20 &&
 			   event.getY() > menuView.jogar_y &&
-			   event.getY() < menuView.jogar_y + menuView.jogarBitmap.getHeight()) {
+			   event.getY() < menuView.jogar_y + menuView.jogarBitmap.getHeight() - 10) {
 				SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.PLUK);
 
 				renderView = new RenderView(this);
@@ -119,9 +120,9 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 				setContentView(renderView);
 			}
 			else if(event.getX() > menuView.sair_x &&
-				event.getX() < menuView.sair_x + menuView.sairBitmap.getWidth() &&
+				event.getX() < menuView.sair_x + menuView.sairBitmap.getWidth() - 20 &&
 				event.getY() > menuView.sair_y &&
-				event.getY() < menuView.sair_y + menuView.sairBitmap.getHeight()) {
+				event.getY() < menuView.sair_y + menuView.sairBitmap.getHeight() - 10) {
 
 				SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.PLUK);
 				finish();
@@ -203,12 +204,21 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 				Rect dst = new Rect(0, 0, canvas.getWidth() - 1, canvas.getHeight() - 1);
 				canvas.drawBitmap(menuBitmap, null, dst, null); 
 
-				jogar_x = canvas.getWidth() / 6;
-				jogar_y = canvas.getHeight() / 2; 
-				canvas.drawBitmap(jogarBitmap, jogar_x, jogar_y, null);
-				sair_x = canvas.getWidth() / 6;
-				sair_y = canvas.getHeight() / 3 * 2;
-				canvas.drawBitmap(sairBitmap, sair_x, sair_y, null);
+				jogar_x = canvas.getWidth() / 6 + 20;
+				jogar_y = canvas.getHeight() / 2 - 30; 
+				dst.top = jogar_y;
+				dst.left = jogar_x;
+				dst.bottom = jogar_y + jogarBitmap.getHeight() - 10;
+				dst.right = jogar_x + jogarBitmap.getWidth() - 20;
+				canvas.drawBitmap(jogarBitmap, null, dst, null);
+
+				sair_x = canvas.getWidth() / 6 + 45;
+				sair_y = canvas.getHeight() / 3 * 2 - 30;
+				dst.top = sair_y;
+				dst.left = sair_x;
+				dst.bottom = sair_y + sairBitmap.getHeight() - 10;
+				dst.right = sair_x + sairBitmap.getWidth() - 20;
+				canvas.drawBitmap(sairBitmap, null, dst, null);
 			}
 			invalidate();
 		}
