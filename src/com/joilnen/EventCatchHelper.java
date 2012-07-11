@@ -49,36 +49,6 @@ class EventCatchHelper {
 
 				}
 			}
-
-			for(Mosca it:renderView.moscas2) {
-				if(motionEvent.getX() > (it.getX() - 15) && motionEvent.getX() < (it.getX() + 40)  &&
-				   motionEvent.getY() > (it.getY() - 15) && motionEvent.getY() < (it.getY() + 40)) {
-					builder.append("Down, ");
-					builder.append(new String().format("%.0f", motionEvent.getX()));
-					builder.append(", ");
-					builder.append(new String().format("%.0f", motionEvent.getY()));
-					String text = builder.toString();
-					Log.d("Teste de toque", text);
-
-					it.setStatus(SkinType.MORRENDO);
-					SoundEfect.getSingleton(context).play(SoundEfectType.PLUK);
-
-					// Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
-					// it.die(); apagando tudo ?!
-				}
-			}
-
-		    /****
-			    break;
-		    case MotionEvent.ACTION_MOVE:
-			    builder.append("Move, ");
-			    break;
-		    case MotionEvent.ACTION_CANCEL:
-			    builder.append("Cancel, ");
-			    break;
-		    case MotionEvent.ACTION_UP:
-			    builder.append("Up, ");
-		    ****/
 		}
 
 		return true;

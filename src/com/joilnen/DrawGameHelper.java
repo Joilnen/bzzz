@@ -15,6 +15,7 @@ class  DrawGameHelper {
 
 	private RenderView renderView;
 	private InfoBar infoBar;
+	private static long start_elapsed_time = System.currentTimeMillis();
 
 	public DrawGameHelper(RenderView renderView) {
 		this.renderView = renderView;
@@ -39,20 +40,6 @@ class  DrawGameHelper {
 
 			}
 
-			for(Mosca it:renderView.moscas2) {
-				if(it.getY() < 450) 
-					it.move();
-				else {
-					System.out.format("valor %d\n", it.getStatus());
-					if(it.getStatus() == SkinType.VOANDO_D)
-						it.setStatus(SkinType.POUSADA_D);
-					else
-						it.setStatus(SkinType.POUSADA_E);
-				}
-				canvas.drawBitmap(it.getBitmap(), it.getX(), it.getY(), null);
-				// if(it.getStatus() == SkinType.MORRENDO) renderView.moscas.remove(it);
-			}
-
 			for(BigMosca it:renderView.big_moscas) {
 				if(it.getY() < 430) 
 					it.move();
@@ -67,7 +54,6 @@ class  DrawGameHelper {
 				// if(it.getStatus() == SkinType.MORRENDO) renderView.moscas.remove(it);
 			}
 
-
 			for(Mosca it:renderView.moscas) {
 				if(it.getStatus() == SkinType.MORRENDO)  {
 					renderView.moscas.remove(it);
@@ -75,13 +61,6 @@ class  DrawGameHelper {
 				}
 			}
 	
-			for(Mosca it:renderView.moscas2) {
-				if(it.getStatus() == SkinType.MORRENDO) {
-					renderView.moscas2.remove(it);
-					infoBar.increment(10);		
-				}
-			}
-
 			if(renderView.moscas.size() < 6) {
 				// for(int i = 0; i < 6; i++) {
 					int i = new Random().nextInt(10);;
@@ -106,7 +85,14 @@ class  DrawGameHelper {
 		catch(Exception e) {
 			Log.d("Bzzz", "Nao consegui mover a mosca");
 		}
-		try { Thread.sleep(25); } catch (Exception e) {  }
+		// Log.d("Bzzz", new String("Elapsed time " + Long.toString(System.currentTimeMillis() - start_elapsed_time))); 
+		long res = Math.abs(System.currentTimeMillis() - start_elapsed_time); 
+		// Log.d("Bzzz", new String("Elapsed time " + Long.toString(res))); 
+		if(res < 30000) 
+			try { Thread.sleep(25 + (30000 - res)/1000); } catch (Exception e) {  }
+		else
+			try { Thread.sleep(25); } catch (Exception e) {  }
+
 	}
 }
 

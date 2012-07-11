@@ -49,7 +49,6 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 	public  class RenderView extends View implements OnTouchListener {
 
 		List<Mosca> moscas = new LinkedList<Mosca>();
-		List<Mosca> moscas2 = new LinkedList<Mosca>();
 		List<BigMosca> big_moscas = new LinkedList<BigMosca>();
 
 		Bolo bolo;
@@ -68,17 +67,9 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 					else m.setStatus(SkinType.VOANDO_E);
 					moscas.add(m);
 				}
-
-				for(int i = 0; i < 3; i++) {
-					Mosca m = new Mosca(context);
-					if(i == 0 || i == 3 || i == 6) m.setStatus(SkinType.VOANDO_D);
-					else m.setStatus(SkinType.VOANDO_E);
-					moscas2.add(m);
-				}
-
-				big_moscas.add(new BigMosca(context));
-				big_moscas.add(new BigMosca(context));
-				big_moscas.get(1).setStatus(SkinType.VOANDO_D);
+				// big_moscas.add(new BigMosca(context));
+				// big_moscas.add(new BigMosca(context));
+				// big_moscas.get(1).setStatus(SkinType.VOANDO_D);
 
 				bolo = new Bolo(context);
 			}
@@ -117,16 +108,21 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 	public boolean onTouch(View v, MotionEvent event) {
 		if(renderView == null) {
-			if(event.getX() > 91 && event.getX() < 248  &&
-			   event.getY() > 235 && event.getY() < 315) {
+			if(event.getX() > menuView.jogar_x &&
+			   event.getX() < menuView.jogar_x + menuView.jogarBitmap.getWidth() &&
+			   event.getY() > menuView.jogar_y &&
+			   event.getY() < menuView.jogar_y + menuView.jogarBitmap.getHeight()) {
 				SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.PLUK);
 
 				renderView = new RenderView(this);
 				renderView.setOnTouchListener(this);
 				setContentView(renderView);
 			}
-			else if(event.getX() > 115 && event.getX() < 215  &&
-				event.getY() > 348 && event.getY() < 395) {
+			else if(event.getX() > menuView.sair_x &&
+				event.getX() < menuView.sair_x + menuView.sairBitmap.getWidth() &&
+				event.getY() > menuView.sair_y &&
+				event.getY() < menuView.sair_y + menuView.sairBitmap.getHeight()) {
+
 				SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.PLUK);
 				finish();
 			}
@@ -166,24 +162,35 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 		return super.onKeyUp(keyCode, event);
 	}
+
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 		return true;
 	}
 
-
-
 	public  class MenuView extends View implements OnTouchListener {
 
 		Bitmap menuBitmap = null;
-		Bitmap jogarBitmap = null;
-		Bitmap sairBitmap = null;
+		public Bitmap jogarBitmap = null;
+		public int jogar_x = 0;
+		public int jogar_y = 0;
+		public Bitmap sairBitmap = null;
+		public int sair_x = 0;
+		public int sair_y = 0;
 
 		MenuView(Context context) {
 			super(context);
 			try {
-				InputStream s = context.getAssets().open("bzzz_menu_c1.png"); 
+				InputStream s = context.getAssets().open("bzzz_menu.png"); 
 				menuBitmap = BitmapFactory.decodeStream(s); 
+				s.close();
+
+				s = context.getAssets().open("jogar.png");  
+				jogarBitmap = BitmapFactory.decodeStream(s); 
+				s.close();
+
+				s = context.getAssets().open("sair.png");  
+				sairBitmap = BitmapFactory.decodeStream(s); 
 				s.close();
 			}
 			catch(Exception e) {
@@ -192,14 +199,16 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		}
 
 		protected void onDraw(Canvas canvas) {
-
 			if(menuBitmap != null) {
 				Rect dst = new Rect(0, 0, canvas.getWidth() - 1, canvas.getHeight() - 1);
 				canvas.drawBitmap(menuBitmap, null, dst, null); 
-				// Paint p = new Paint();
-				// p.setStyle(Style.STROKE);
-				// canvas.drawRect(91, 248, 235, 315, p);
-				// canvas.drawRect(115, 348, 215, 395, p);
+
+				jogar_x = canvas.getWidth() / 6;
+				jogar_y = canvas.getHeight() / 2; 
+				canvas.drawBitmap(jogarBitmap, jogar_x, jogar_y, null);
+				sair_x = canvas.getWidth() / 6;
+				sair_y = canvas.getHeight() / 3 * 2;
+				canvas.drawBitmap(sairBitmap, sair_x, sair_y, null);
 			}
 			invalidate();
 		}
