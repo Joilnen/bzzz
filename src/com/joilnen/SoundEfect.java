@@ -18,7 +18,7 @@ class SoundEfect {
 	private int plukId = -1;
 	private int sairId = -1;
 	static private SoundEfect se = null;
-	private MediaPlayer mediaPlayer = new MediaPlayer();
+	private MediaPlayer mediaPlayer = null;
 	private Context context;
 
 	private SoundEfect(Context context) {
@@ -33,12 +33,6 @@ class SoundEfect {
 				sairId = soundPool.load(audioStream, 1);
 			audioStream.close();
 
-			audioStream = am.openFd("loop_musica1.ogg");
-			mediaPlayer.setDataSource(audioStream.getFileDescriptor(), audioStream.getStartOffset(), audioStream.getLength()); 
-			audioStream.close();
-			mediaPlayer.prepare();
-			mediaPlayer.setLooping(true);
-			playMusic();
 		}
 		catch(Exception e) {
 			Log.d("Bzzz", "Nao consegui carregar efeitos de som");
@@ -65,18 +59,37 @@ class SoundEfect {
 				if(sairId != -1 && StatOption.getSingleton().getSomEfectStat())
 					if(soundPool.play(sairId, 1, 1, 0, 0, 1) == 0)
 						Log.d("Erro", "Nao consegui tocar o som de efeito"); 
-
 		}
 	}
 
 	public void playMusic() {
-		if(mediaPlayer != null)
-			mediaPlayer.start();
+		try { 
+			if(mediaPlayer == null) {
+				mediaPlayer = new MediaPlayer();
+				AssetFileDescriptor audioStream = context.getAssets().openFd("loop_musica1.ogg");
+				mediaPlayer.setDataSource(audioStream.getFileDescriptor(), audioStream.getStartOffset(), audioStream.getLength()); 
+				audioStream.close();
+				mediaPlayer.setLooping(true);
+				mediaPlayer.prepare();
+				mediaPlayer.start();
+			}
+		}
+		catch(Exception e) {
+
+		}
 	}
 
 	public void stopMusic() {
 		if(mediaPlayer != null) {
 			mediaPlayer.stop();
+			mediaPlayer.release();
+			mediaPlayer = null;
+		}
+	}
+
+	public void pauseMusic() {
+		if(mediaPlayer != null) {
+			stopMusic();
 		}
 	}
 }

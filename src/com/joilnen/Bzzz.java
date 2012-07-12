@@ -116,7 +116,10 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 	protected void onPause() {
 		super.onPause();
-		SoundEfect.getSingleton(this).playMusic();
+		SoundEfect.getSingleton(this).pauseMusic();
+		if(isFinishing() == true) {
+			SoundEfect.getSingleton(this).stopMusic();
+		}
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {

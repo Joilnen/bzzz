@@ -3,8 +3,10 @@ package com.joilnen;
 import com.joilnen.Bzzz.RenderView;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Paint.Align;
 import android.graphics.Typeface;
+import android.graphics.Color;
 
 class InfoBar {
 	private int count = 0;
@@ -42,6 +44,13 @@ class InfoBar {
 		paint.setTextSize(25);
 		paint.setTextAlign(Align.RIGHT);
 		canvas.drawText(sb.toString(), canvas.getWidth() -  10, 32, paint);
+
+		paint.setColor(Color.BLUE);
+
+		paint.setTextSize(10);
+		canvas.drawText("Cake heath", 30, 33, new Paint());
+		paint.setStyle(Style.STROKE);
+		canvas.drawRect(2, 10, 120, 37, paint);
 	}
 }
 
