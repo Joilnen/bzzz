@@ -296,23 +296,30 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 			holder = getHolder();
 
 			try {
-				for(int i = 0; i < 6; i++) {
+				for(int i = 0; i < 26; i++) {
 					Mosca m = new Mosca(context);
 					if((i % 3) == 0) m.setStatus(SkinType.VOANDO_D);
 					else m.setStatus(SkinType.VOANDO_E);
 					moscas.add(m);
 				}
-				big_moscas.add(new BigMosca(context));
-				big_moscas.add(new BigMosca(context));
-				big_moscas.get(1).setStatus(SkinType.VOANDO_D);
 
-				moscas_agulha.add(new MoscaAgulha(context));
-				moscas_agulha.add(new MoscaAgulha(context));
-				moscas_agulha.get(1).setStatus(SkinType.VOANDO_D);
+				for(int i = 0; i < 26; i++) {
+					big_moscas.add(new BigMosca(context));
+					big_moscas.add(new BigMosca(context));
+					big_moscas.get(1).setStatus(SkinType.VOANDO_D);
+				}
 
-				moscas_ondular.add(new MoscaOndular(context));
-				moscas_ondular.add(new MoscaOndular(context));
-				moscas_ondular.get(1).setStatus(SkinType.VOANDO_D);
+				for(int i = 0; i < 26; i++) {
+					moscas_agulha.add(new MoscaAgulha(context));
+					moscas_agulha.add(new MoscaAgulha(context));
+					moscas_agulha.get(1).setStatus(SkinType.VOANDO_D);
+				}
+
+				for(int i = 0; i < 26; i++) {
+					moscas_ondular.add(new MoscaOndular(context));
+					moscas_ondular.add(new MoscaOndular(context));
+					moscas_ondular.get(1).setStatus(SkinType.VOANDO_D);
+				}
 
 				bolo = new Bolo(context);
 			}
@@ -338,10 +345,8 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 				}
 				catch(InterruptedException e) {
 				
-
 				}
 			}
-
 		}
 
 		public void run() {
@@ -349,7 +354,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 				if(!holder.getSurface().isValid())
 					continue;
 				Canvas canvas = holder.lockCanvas();
-				canvas.getClipBounds(dstRect);
+				// canvas.getClipBounds(dstRect);
 				drawHelper2.draw(canvas);
 				// drawHelper2.drawBound(canvas, dstRect); still to implements
 				holder.unlockCanvasAndPost(canvas);
