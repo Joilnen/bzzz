@@ -5,21 +5,22 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import com.joilnen.Bzzz.RenderView;
+import com.joilnen.Bzzz.RenderView2;
 import com.joilnen.Mosca;
 import com.joilnen.BigMosca;
 import com.joilnen.Bolo;
 
 import java.util.Random;
 
-class  DrawGameHelper {
+class  DrawGameHelper2 {
 
-	private RenderView renderView;
+	private RenderView2 renderView;
 	private InfoBar infoBar;
 	private static long start_elapsed_time = System.currentTimeMillis();
 
-	public DrawGameHelper(RenderView renderView) {
+	public DrawGameHelper2(RenderView2 renderView) {
 		this.renderView = renderView;
-		this.infoBar =	new InfoBar(renderView);
+		// this.infoBar =	new InfoBar(renderView);
 	}
 
 	public void draw(Canvas canvas) {
@@ -107,7 +108,7 @@ class  DrawGameHelper {
 				}
 			}
 			***/
-			infoBar.draw(canvas);
+		//	infoBar.draw(canvas);
 
 		}
 		catch(Exception e) {

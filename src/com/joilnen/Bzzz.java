@@ -10,6 +10,8 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
+import android.view.SurfaceView;
+import android.view.SurfaceHolder;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnTouchListener;
@@ -47,10 +49,15 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 	MenuView menuView = null;
 	DrawGameHelper drawHelper = null;
 
+	RenderView2 renderView2 = null;
+	DrawGameHelper2 drawHelper2 = null;
+
 	public  class RenderView extends View implements OnTouchListener {
 
 		List<Mosca> moscas = new LinkedList<Mosca>();
 		List<BigMosca> big_moscas = new LinkedList<BigMosca>();
+		List<MoscaAgulha> moscas_agulha = new LinkedList<MoscaAgulha>();
+		List<MoscaOndular> moscas_ondular = new LinkedList<MoscaOndular>();
 
 		Bolo bolo;
 
@@ -68,9 +75,17 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 					else m.setStatus(SkinType.VOANDO_E);
 					moscas.add(m);
 				}
-				// big_moscas.add(new BigMosca(context));
-				// big_moscas.add(new BigMosca(context));
-				// big_moscas.get(1).setStatus(SkinType.VOANDO_D);
+				big_moscas.add(new BigMosca(context));
+				big_moscas.add(new BigMosca(context));
+				big_moscas.get(1).setStatus(SkinType.VOANDO_D);
+
+				moscas_agulha.add(new MoscaAgulha(context));
+				moscas_agulha.add(new MoscaAgulha(context));
+				moscas_agulha.get(1).setStatus(SkinType.VOANDO_D);
+
+				moscas_ondular.add(new MoscaOndular(context));
+				moscas_ondular.add(new MoscaOndular(context));
+				moscas_ondular.get(1).setStatus(SkinType.VOANDO_D);
 
 				bolo = new Bolo(context);
 			}
@@ -102,20 +117,26 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		/***
 		menuView = new MenuView(this);
 		menuView.setOnTouchListener(this);
 		setContentView(menuView);
+		***/
+		renderView2 = new RenderView2(this);
+		setContentView(renderView2);
 		SoundEfect.getSingleton(this);
 	}
 
 	// Nao funciounou vai saber pq :(
 	protected void onResume() {
 		super.onResume();
+		renderView2.resume();
 		SoundEfect.getSingleton(this).playMusic();
 	}
 
 	protected void onPause() {
 		super.onPause();
+		renderView2.pause();
 		SoundEfect.getSingleton(this).pauseMusic();
 		if(isFinishing() == true) {
 			SoundEfect.getSingleton(this).stopMusic();
@@ -247,6 +268,90 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 		public void onSensorChanged(SensorEvent event) {
 
+		}
+	}
+
+	class RenderView2 extends SurfaceView implements Runnable {
+
+		Thread thread = null;
+		SurfaceHolder holder;
+
+		volatile boolean running = false;
+
+
+		List<Mosca> moscas = new LinkedList<Mosca>();
+		List<BigMosca> big_moscas = new LinkedList<BigMosca>();
+		List<MoscaAgulha> moscas_agulha = new LinkedList<MoscaAgulha>();
+		List<MoscaOndular> moscas_ondular = new LinkedList<MoscaOndular>();
+
+		Bolo bolo;
+
+		// Implementado usando memento para p3
+		GameState<Integer> gameState;
+		// Implementado usando singleton para p3 (opcoes do usuario tipo sem som essas coisas)
+		StatOption options;
+
+		public RenderView2(Context context) {
+			super(context);
+			holder = getHolder();
+
+			try {
+				for(int i = 0; i < 6; i++) {
+					Mosca m = new Mosca(context);
+					if((i % 3) == 0) m.setStatus(SkinType.VOANDO_D);
+					else m.setStatus(SkinType.VOANDO_E);
+					moscas.add(m);
+				}
+				big_moscas.add(new BigMosca(context));
+				big_moscas.add(new BigMosca(context));
+				big_moscas.get(1).setStatus(SkinType.VOANDO_D);
+
+				moscas_agulha.add(new MoscaAgulha(context));
+				moscas_agulha.add(new MoscaAgulha(context));
+				moscas_agulha.get(1).setStatus(SkinType.VOANDO_D);
+
+				moscas_ondular.add(new MoscaOndular(context));
+				moscas_ondular.add(new MoscaOndular(context));
+				moscas_ondular.get(1).setStatus(SkinType.VOANDO_D);
+
+				bolo = new Bolo(context);
+			}
+			catch(Exception e) {
+				Log.d("Bzzz", "Nao consegui instanciar a moscas");
+			}
+
+			gameState = new GameState<Integer>(GameStateType.IN_MENU);
+			drawHelper2 = new DrawGameHelper2(this);
+		}
+
+		public void resume() {
+			running = true;
+			thread = new Thread(this);
+			thread.start();
+		}
+
+		public void pause() {
+			running = false;
+			while(true) {
+				try {
+					thread.join();
+				}
+				catch(InterruptedException e) {
+				
+
+				}
+			}
+
+		}
+
+		public void run() {
+			while(running) {
+				if(!holder.getSurface().isValid())
+					continue;
+				Canvas canvas = holder.lockCanvas();
+				drawHelper2.draw(canvas);
+				holder.unlockCanvasAndPost(canvas);
+			}
 		}
 	}
 }
