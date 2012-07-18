@@ -275,7 +275,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 		Thread thread = null;
 		SurfaceHolder holder;
-
+		Bitmap frameBuffer;
 		volatile boolean running = false;
 
 
@@ -349,7 +349,9 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 				if(!holder.getSurface().isValid())
 					continue;
 				Canvas canvas = holder.lockCanvas();
+				canvas.getClipBounds(dstRect);
 				drawHelper2.draw(canvas);
+				// drawHelper2.drawBound(canvas, dstRect); still to implements
 				holder.unlockCanvasAndPost(canvas);
 			}
 		}
