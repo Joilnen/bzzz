@@ -117,10 +117,12 @@ class  DrawGameHelper2 {
 		// Log.d("Bzzz", new String("Elapsed time " + Long.toString(System.currentTimeMillis() - start_elapsed_time))); 
 		long res = Math.abs(System.currentTimeMillis() - start_elapsed_time); 
 		// Log.d("Bzzz", new String("Elapsed time " + Long.toString(res))); 
+		/*** only to check performance
 		if(res < 30000) 
 			try { Thread.sleep(25 + (30000 - res)/1000); } catch (Exception e) {  }
 		else
 			try { Thread.sleep(25); } catch (Exception e) {  }
+		***/
 
 	}
 }

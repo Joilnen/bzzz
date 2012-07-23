@@ -17,7 +17,7 @@ import com.joilnen.SkinType;
 public class Mosca {
 
 	int x, y, inc_x, inc_y;
-	Bitmap[] skin = new Bitmap[5];
+	Bitmap[] skin = new Bitmap[7];
 	Bitmap testSkin;
 	int status = 0;
 	Random random = new Random();
