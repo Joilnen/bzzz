@@ -56,10 +56,10 @@ class EventCatchHelper2 {
 
 	public void doSensorCatch() {
 		for(Mosca it:renderView.moscas) {
-			if(it.getY() >= 450) it.setPosY(449);
+			if(it.getY() >= 450)
+				it.setPosY(449);
 		}
 	}
-
 }
 
 

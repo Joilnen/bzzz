@@ -9,18 +9,19 @@ import com.joilnen.Bzzz.RenderView2;
 import com.joilnen.Mosca;
 import com.joilnen.BigMosca;
 import com.joilnen.Bolo;
+import com.joilnen.InfoBar2;
 
 import java.util.Random;
 
 class  DrawGameHelper2 {
 
 	private RenderView2 renderView;
-	private InfoBar infoBar;
+	private InfoBar2 infoBar;
 	private static long start_elapsed_time = System.currentTimeMillis();
 
 	public DrawGameHelper2(RenderView2 renderView) {
 		this.renderView = renderView;
-		// this.infoBar =	new InfoBar(renderView);
+		// this.infoBar =	new InfoBar2(renderView);
 	}
 
 	public void draw(Canvas canvas) {
@@ -40,6 +41,8 @@ class  DrawGameHelper2 {
 				canvas.drawBitmap(it.getBitmap(), it.getX(), it.getY(), null);
 
 			}
+
+			/****
 
 			for(BigMosca it:renderView.big_moscas) {
 				if(it.getY() < 430) 
@@ -82,11 +85,12 @@ class  DrawGameHelper2 {
 				canvas.drawBitmap(it.getBitmap(), it.getX(), it.getY(), null);
 				// if(it.getStatus() == SkinType.MORRENDO) renderView.moscas.remove(it);
 			}
+			***/
 
 			for(Mosca it:renderView.moscas) {
 				if(it.getStatus() == SkinType.MORRENDO)  {
 					renderView.moscas.remove(it);
-					infoBar.increment(10);
+		//			infoBar.increment(10);
 				}
 			}
 	
@@ -115,7 +119,7 @@ class  DrawGameHelper2 {
 			Log.d("Bzzz", "Nao consegui mover a mosca");
 		}
 		// Log.d("Bzzz", new String("Elapsed time " + Long.toString(System.currentTimeMillis() - start_elapsed_time))); 
-		long res = Math.abs(System.currentTimeMillis() - start_elapsed_time); 
+		// long res = Math.abs(System.currentTimeMillis() - start_elapsed_time); 
 		// Log.d("Bzzz", new String("Elapsed time " + Long.toString(res))); 
 		/*** only to check performance
 		if(res < 30000) 

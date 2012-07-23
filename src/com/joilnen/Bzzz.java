@@ -145,7 +145,8 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
-		if(renderView == null) {
+		/***
+		if(renderView == null || renderView2 == null) {
 			if(event.getX() > menuView.jogar_x &&
 			   event.getX() < menuView.jogar_x + menuView.jogarBitmap.getWidth() - 20 &&
 			   event.getY() > menuView.jogar_y &&
@@ -177,8 +178,11 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 					renderView = null;
 					return true;
 			}
-			return renderView.onTouch(v, event);
+			return renderView2.onTouch(v, event);
 		}
+		***/
+		return renderView2.onTouch(v, event);
+
 	}
 
 	public void onSensorChanged(SensorEvent event) {
@@ -297,13 +301,14 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 			holder = getHolder();
 
 			try {
-				for(int i = 0; i < 26; i++) {
+				for(int i = 0; i < 6; i++) {
 					Mosca m = new Mosca(context);
 					if((i % 3) == 0) m.setStatus(SkinType.VOANDO_D);
 					else m.setStatus(SkinType.VOANDO_E);
 					moscas.add(m);
 				}
 
+				/***
 				for(int i = 0; i < 26; i++) {
 					big_moscas.add(new BigMosca(context));
 					big_moscas.add(new BigMosca(context));
@@ -321,6 +326,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 					moscas_ondular.add(new MoscaOndular(context));
 					moscas_ondular.get(1).setStatus(SkinType.VOANDO_D);
 				}
+				***/
 
 				bolo = new Bolo(context);
 			}
