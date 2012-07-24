@@ -40,6 +40,7 @@ class  DrawGameHelper {
 
 			}
 
+			/***
 			for(BigMosca it:renderView.big_moscas) {
 				if(it.getY() < 430) 
 					it.move();
@@ -81,6 +82,7 @@ class  DrawGameHelper {
 				canvas.drawBitmap(it.getBitmap(), it.getX(), it.getY(), null);
 				// if(it.getStatus() == SkinType.MORRENDO) renderView.moscas.remove(it);
 			}
+			***/
 
 			for(Mosca it:renderView.moscas) {
 				if(it.getStatus() == SkinType.MORRENDO)  {
@@ -88,7 +90,7 @@ class  DrawGameHelper {
 					infoBar.increment(10);
 				}
 			}
-	
+
 			if(renderView.moscas.size() < 6) {
 				// for(int i = 0; i < 6; i++) {
 					int i = new Random().nextInt(10);;

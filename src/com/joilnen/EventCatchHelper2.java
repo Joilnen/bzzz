@@ -30,10 +30,12 @@ class EventCatchHelper2 {
 
 	public boolean doCatch() {
 
-		StringBuilder builder = new StringBuilder();
-		builder.setLength(0);
 		switch(motionEvent.getAction()) {
 		    case MotionEvent.ACTION_UP:
+
+			StringBuilder builder = new StringBuilder();
+			builder.setLength(0);
+
 			for(Mosca it:renderView.moscas) {
 				if(motionEvent.getX() > (it.getX() - 15) && motionEvent.getX() < (it.getX() + 40)  &&
 				   motionEvent.getY() > (it.getY() - 15) && motionEvent.getY() < (it.getY() + 40)) {

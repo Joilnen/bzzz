@@ -21,10 +21,10 @@ class  DrawGameHelper2 {
 
 	public DrawGameHelper2(RenderView2 renderView) {
 		this.renderView = renderView;
-		// this.infoBar =	new InfoBar2(renderView);
+		this.infoBar =	new InfoBar2(renderView);
 	}
 
-	public void draw(Canvas canvas) {
+	public  void draw(Canvas canvas) {
 		canvas.drawRGB(255, 255, 255);
 		try {
 			canvas.drawBitmap(renderView.bolo.getBitmap(), 10, 310, null);
@@ -90,7 +90,7 @@ class  DrawGameHelper2 {
 			for(Mosca it:renderView.moscas) {
 				if(it.getStatus() == SkinType.MORRENDO)  {
 					renderView.moscas.remove(it);
-		//			infoBar.increment(10);
+					infoBar.increment(10);
 				}
 			}
 	
@@ -112,21 +112,19 @@ class  DrawGameHelper2 {
 				}
 			}
 			***/
-		//	infoBar.draw(canvas);
+			infoBar.draw(canvas);
 
 		}
 		catch(Exception e) {
 			Log.d("Bzzz", "Nao consegui mover a mosca");
 		}
 		// Log.d("Bzzz", new String("Elapsed time " + Long.toString(System.currentTimeMillis() - start_elapsed_time))); 
-		// long res = Math.abs(System.currentTimeMillis() - start_elapsed_time); 
+		long res = Math.abs(System.currentTimeMillis() - start_elapsed_time); 
 		// Log.d("Bzzz", new String("Elapsed time " + Long.toString(res))); 
-		/*** only to check performance
 		if(res < 30000) 
-			try { Thread.sleep(25 + (30000 - res)/1000); } catch (Exception e) {  }
+			try { Thread.sleep(55 + (30000 - res)/1000); } catch (Exception e) {  }
 		else
-			try { Thread.sleep(25); } catch (Exception e) {  }
-		***/
+			try { Thread.sleep(55); } catch (Exception e) {  }
 
 	}
 }
