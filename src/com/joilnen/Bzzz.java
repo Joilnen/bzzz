@@ -125,6 +125,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		renderView2 = new RenderView2(this);
 		renderView2.setOnTouchListener(this);
 		setContentView(renderView2);
+
 		SoundEfect.getSingleton(this);
 	}
 
@@ -146,16 +147,16 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 	public boolean onTouch(View v, MotionEvent event) {
 		/***
-		if(renderView == null || renderView2 == null) {
+		if(renderView2 == null) {
 			if(event.getX() > menuView.jogar_x &&
 			   event.getX() < menuView.jogar_x + menuView.jogarBitmap.getWidth() - 20 &&
 			   event.getY() > menuView.jogar_y &&
 			   event.getY() < menuView.jogar_y + menuView.jogarBitmap.getHeight() - 10) {
 				SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.PLUK);
 
-				renderView = new RenderView(this);
-				renderView.setOnTouchListener(this);
-				setContentView(renderView);
+				renderView2 = new RenderView2(this);
+				renderView2.setOnTouchListener(this);
+				setContentView(renderView2);
 			}
 			else if(event.getX() > menuView.sair_x &&
 				event.getX() < menuView.sair_x + menuView.sairBitmap.getWidth() - 20 &&
@@ -178,7 +179,6 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 					renderView = null;
 					return true;
 			}
-			return renderView2.onTouch(v, event);
 		}
 		***/
 		return renderView2.onTouch(v, event);
@@ -372,6 +372,10 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 			// try { Thread.sleep(16); } catch (Exception e) {  }
 			return new EventCatchHelper2(this, event).doCatch();
+		}
+
+		public void draw(Canvas canvas) {
+
 		}
 
 	}

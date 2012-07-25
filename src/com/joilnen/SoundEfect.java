@@ -66,7 +66,7 @@ class SoundEfect {
 		try { 
 			if(mediaPlayer == null) {
 				mediaPlayer = new MediaPlayer();
-				AssetFileDescriptor audioStream = context.getAssets().openFd("loop_musica1.ogg");
+				AssetFileDescriptor audioStream = context.getAssets().openFd("loop_menu.ogg");
 				mediaPlayer.setDataSource(audioStream.getFileDescriptor(), audioStream.getStartOffset(), audioStream.getLength()); 
 				audioStream.close();
 				mediaPlayer.setLooping(true);

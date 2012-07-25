@@ -18,6 +18,7 @@ class  DrawGameHelper2 {
 	private RenderView2 renderView;
 	private InfoBar2 infoBar;
 	private static long start_elapsed_time = System.currentTimeMillis();
+	private static int ELAPSED_TIME = 55;
 
 	public DrawGameHelper2(RenderView2 renderView) {
 		this.renderView = renderView;
@@ -85,15 +86,16 @@ class  DrawGameHelper2 {
 				canvas.drawBitmap(it.getBitmap(), it.getX(), it.getY(), null);
 				// if(it.getStatus() == SkinType.MORRENDO) renderView.moscas.remove(it);
 			}
+
 			***/
 
 			for(Mosca it:renderView.moscas) {
-				if(it.getStatus() == SkinType.MORRENDO)  {
-					renderView.moscas.remove(it);
+				if(it.getStatus() == SkinType.MORRENDO && renderView.moscas.remove(it)) {
 					infoBar.increment(10);
+					break;
 				}
 			}
-	
+
 			if(renderView.moscas.size() < 6) {
 				// for(int i = 0; i < 6; i++) {
 					int i = new Random().nextInt(10);;
@@ -104,16 +106,7 @@ class  DrawGameHelper2 {
 				// }
 			}
 
-			/*** Rever codigo com bug recriacao das moscas
-
-			if(renderView.moscas.size() < 1) {
-				for(int i = 0; i < 4; i++) {
-					renderView.moscas.add(new Mosca(renderView.getContext()));
-				}
-			}
-			***/
 			infoBar.draw(canvas);
-
 		}
 		catch(Exception e) {
 			Log.d("Bzzz", "Nao consegui mover a mosca");
@@ -122,10 +115,9 @@ class  DrawGameHelper2 {
 		long res = Math.abs(System.currentTimeMillis() - start_elapsed_time); 
 		// Log.d("Bzzz", new String("Elapsed time " + Long.toString(res))); 
 		if(res < 30000) 
-			try { Thread.sleep(55 + (30000 - res)/1000); } catch (Exception e) {  }
+			try { Thread.sleep(ELAPSED_TIME + (30000 - res)/1000); } catch(Exception e) {  }
 		else
-			try { Thread.sleep(55); } catch (Exception e) {  }
-
+			try { Thread.sleep(ELAPSED_TIME); } catch (Exception e) {  }
 	}
 }
 
