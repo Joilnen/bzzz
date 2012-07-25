@@ -117,14 +117,15 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		/***
+
 		menuView = new MenuView(this);
 		menuView.setOnTouchListener(this);
 		setContentView(menuView);
-		***/
+		/***
 		renderView2 = new RenderView2(this);
 		renderView2.setOnTouchListener(this);
 		setContentView(renderView2);
+		***/
 
 		SoundEfect.getSingleton(this);
 	}
@@ -132,13 +133,15 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 	// Nao funciounou vai saber pq :(
 	protected void onResume() {
 		super.onResume();
-		renderView2.resume();
+		if(renderView2 != null)
+			renderView2.resume();
 		SoundEfect.getSingleton(this).playMusic();
 	}
 
 	protected void onPause() {
 		super.onPause();
-		renderView2.pause();
+		if(renderView2 != null)
+			renderView2.pause();
 		SoundEfect.getSingleton(this).pauseMusic();
 		if(isFinishing() == true) {
 			SoundEfect.getSingleton(this).stopMusic();
@@ -146,7 +149,6 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
-		/***
 		if(renderView2 == null) {
 			if(event.getX() > menuView.jogar_x &&
 			   event.getX() < menuView.jogar_x + menuView.jogarBitmap.getWidth() - 20 &&
@@ -157,6 +159,8 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 				renderView2 = new RenderView2(this);
 				renderView2.setOnTouchListener(this);
 				setContentView(renderView2);
+				menuView = null;
+				onResume();
 			}
 			else if(event.getX() > menuView.sair_x &&
 				event.getX() < menuView.sair_x + menuView.sairBitmap.getWidth() - 20 &&
@@ -176,13 +180,12 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 					menuView = new MenuView(this);
 					menuView.setOnTouchListener(this);
 					setContentView(menuView);
-					renderView = null;
+					renderView2 = null;
+					onResume();
 					return true;
 			}
+			return renderView2.onTouch(v, event);
 		}
-		***/
-		return renderView2.onTouch(v, event);
-
 	}
 
 	public void onSensorChanged(SensorEvent event) {
