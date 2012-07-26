@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -196,17 +197,20 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 	}
 
+	// private boolean flag = false;
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		
-		if(keyCode == KeyEvent.KEYCODE_BACK && renderView != null) {
+		if(keyCode == KeyEvent.KEYCODE_BACK && renderView2 != null) {
+			renderView2.setEnabled(false);
 			menuView = new MenuView(this);
 			menuView.setOnTouchListener(this);
 			setContentView(menuView);
-			renderView = null;
+			renderView2.pause();
+			renderView2 = null;
 			return true;
 		}
 
-		return super.onKeyUp(keyCode, event);
+		return false;
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -352,6 +356,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 			while(true) {
 				try {
 					thread.join();
+					break;
 				}
 				catch(InterruptedException e) {
 				
@@ -380,7 +385,6 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		public void draw(Canvas canvas) {
 
 		}
-
 	}
 }
 

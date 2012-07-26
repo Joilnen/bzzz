@@ -25,7 +25,7 @@ class  DrawGameHelper2 {
 		this.infoBar =	new InfoBar2(renderView);
 	}
 
-	public  void draw(Canvas canvas) {
+	public void draw(Canvas canvas) {
 		canvas.drawRGB(255, 255, 255);
 		try {
 			canvas.drawBitmap(renderView.bolo.getBitmap(), 10, 310, null);
@@ -102,6 +102,7 @@ class  DrawGameHelper2 {
 					Mosca m = new Mosca(this.renderView.getContext());
 					if((i % 3) == 0) m.setStatus(SkinType.VOANDO_D);
 					else m.setStatus(SkinType.VOANDO_E);
+					// renderView.moscas.add(m);
 					renderView.moscas.add(m);
 				// }
 			}
