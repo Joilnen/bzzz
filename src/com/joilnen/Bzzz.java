@@ -162,6 +162,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 				setContentView(renderView2);
 				menuView = null;
 				onResume();
+				SoundEfect.getSingleton(v.getContext()).changeMusic(true);
 			}
 			else if(event.getX() > menuView.sair_x &&
 				event.getX() < menuView.sair_x + menuView.sairBitmap.getWidth() - 20 &&
@@ -178,6 +179,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		else {
 			switch(event.getAction()) {
 				case MotionEvent.ACTION_CANCEL:
+					SoundEfect.getSingleton(v.getContext()).changeMusic(false);
 					menuView = new MenuView(this);
 					menuView.setOnTouchListener(this);
 					setContentView(menuView);

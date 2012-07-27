@@ -62,11 +62,12 @@ class SoundEfect {
 		}
 	}
 
+	String music_name = "loop_bongo1.ogg";
 	public void playMusic() {
 		try { 
 			if(mediaPlayer == null) {
 				mediaPlayer = new MediaPlayer();
-				AssetFileDescriptor audioStream = context.getAssets().openFd("loop_bongo1.ogg");
+				AssetFileDescriptor audioStream = context.getAssets().openFd(music_name);
 				mediaPlayer.setDataSource(audioStream.getFileDescriptor(), audioStream.getStartOffset(), audioStream.getLength()); 
 				audioStream.close();
 				mediaPlayer.setLooping(true);
@@ -91,6 +92,15 @@ class SoundEfect {
 		if(mediaPlayer != null) {
 			stopMusic();
 		}
+	}
+
+	public void changeMusic(boolean b) {
+		if(b == true) 
+			music_name = "loop_musica2.ogg";
+		else
+			music_name = "loop_bongo1.ogg";
+		stopMusic();
+		playMusic();
 	}
 }
 
