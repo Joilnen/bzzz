@@ -14,17 +14,10 @@ class EventCatchHelper2 {
 	private MotionEvent motionEvent;
 	private SensorEvent sensorEvent;
 	private Context context;
-	private SoundEfect soundEfect;
 
 	public EventCatchHelper2(RenderView2 renderView, MotionEvent motionEvent) {
 		this.renderView = renderView;
 		this.motionEvent = motionEvent;
-		this.context = renderView.getContext();
-	}
-
-	public EventCatchHelper2(RenderView2 renderView2, SensorEvent sensorEvent) {
-		this.renderView = renderView;
-		this.sensorEvent = sensorEvent;
 		this.context = renderView.getContext();
 	}
 
@@ -48,7 +41,6 @@ class EventCatchHelper2 {
 
 					it.setStatus(SkinType.MORRENDO);
 					SoundEfect.getSingleton(context).play(SoundEfectType.PLUK);
-
 				}
 			}
 		}

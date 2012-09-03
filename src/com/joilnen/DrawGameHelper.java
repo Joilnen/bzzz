@@ -37,7 +37,6 @@ class  DrawGameHelper {
 						it.setStatus(SkinType.POUSADA_E);
 				}
 				canvas.drawBitmap(it.getBitmap(), it.getX(), it.getY(), null);
-
 			}
 
 			/***

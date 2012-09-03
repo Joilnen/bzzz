@@ -22,7 +22,7 @@ class  DrawGameHelper2 {
 
 	public DrawGameHelper2(RenderView2 renderView) {
 		this.renderView = renderView;
-		this.infoBar =	new InfoBar2(renderView);
+		this.infoBar = new InfoBar2(renderView);
 	}
 
 	public void draw(Canvas canvas) {
@@ -30,7 +30,7 @@ class  DrawGameHelper2 {
 		try {
 			canvas.drawBitmap(renderView.bolo.getBitmap(), 10, 310, null);
 			for(Mosca it:renderView.moscas) {
-				if(it.getY() < 450) 
+				if(it.getY() < 450)
 					it.move();
 				else {
 					System.out.format("valor %d\n", it.getStatus());
@@ -40,7 +40,6 @@ class  DrawGameHelper2 {
 						it.setStatus(SkinType.POUSADA_E);
 				}
 				canvas.drawBitmap(it.getBitmap(), it.getX(), it.getY(), null);
-
 			}
 
 			/****
@@ -90,11 +89,13 @@ class  DrawGameHelper2 {
 			***/
 
 			for(Mosca it:renderView.moscas) {
-				if(it.getStatus() == SkinType.MORRENDO && renderView.moscas.remove(it)) {
+				if(it.getStatus() == SkinType.MORRENDO) {
+					renderView.moscas.remove(it);
 					infoBar.increment(10);
 					break;
 				}
 			}
+
 
 			if(renderView.moscas.size() < 6) {
 				// for(int i = 0; i < 6; i++) {
@@ -102,7 +103,6 @@ class  DrawGameHelper2 {
 					Mosca m = new Mosca(this.renderView.getContext());
 					if((i % 3) == 0) m.setStatus(SkinType.VOANDO_D);
 					else m.setStatus(SkinType.VOANDO_E);
-					// renderView.moscas.add(m);
 					renderView.moscas.add(m);
 				// }
 			}

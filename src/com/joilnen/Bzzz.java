@@ -55,7 +55,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 	public  class RenderView extends View implements OnTouchListener {
 
-		List<Mosca> moscas = new LinkedList<Mosca>();
+		List<Mosca> moscas = Collections.synchronizedList(new LinkedList<Mosca>());
 		List<BigMosca> big_moscas = new LinkedList<BigMosca>();
 		List<MoscaAgulha> moscas_agulha = new LinkedList<MoscaAgulha>();
 		List<MoscaOndular> moscas_ondular = new LinkedList<MoscaOndular>();
@@ -292,7 +292,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		Bitmap frameBuffer;
 		volatile boolean running = false;
 
-
+		// List<Mosca> moscas = Collections.synchronizedList(new LinkedList<Mosca>());
 		List<Mosca> moscas = new LinkedList<Mosca>();
 		List<BigMosca> big_moscas = new LinkedList<BigMosca>();
 		List<MoscaAgulha> moscas_agulha = new LinkedList<MoscaAgulha>();
@@ -306,6 +306,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		StatOption options;
 
 		public RenderView2(Context context) {
+
 			super(context);
 			holder = getHolder();
 
@@ -382,10 +383,6 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 			// try { Thread.sleep(16); } catch (Exception e) {  }
 			return new EventCatchHelper2(this, event).doCatch();
-		}
-
-		public void draw(Canvas canvas) {
-
 		}
 	}
 }
