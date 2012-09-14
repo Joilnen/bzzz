@@ -384,6 +384,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 			// try { Thread.sleep(16); } catch (Exception e) {  }
 			return new EventCatchHelper2(this, event).doCatch();
 		}
+
 	}
 }
 

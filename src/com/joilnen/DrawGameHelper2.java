@@ -2,6 +2,8 @@ package com.joilnen;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Message;
+import android.os.Handler;
 import android.util.Log;
 
 import com.joilnen.Bzzz.RenderView;
@@ -19,6 +21,7 @@ class  DrawGameHelper2 {
 	private InfoBar2 infoBar;
 	private static long start_elapsed_time = System.currentTimeMillis();
 	private static int ELAPSED_TIME = 55;
+	private Handler handler = new Handler();
 
 	public DrawGameHelper2(RenderView2 renderView) {
 		this.renderView = renderView;
@@ -88,10 +91,14 @@ class  DrawGameHelper2 {
 
 			***/
 
-			for(Mosca it:renderView.moscas) {
+			for(final Mosca it:renderView.moscas) {
 				if(it.getStatus() == SkinType.MORRENDO) {
-					renderView.moscas.remove(it);
-					infoBar.increment(10);
+					handler.post( new Runnable() {
+						public void run() {
+							renderView.moscas.remove(it);
+							infoBar.increment(10);
+						}
+					});
 					break;
 				}
 			}
@@ -100,10 +107,15 @@ class  DrawGameHelper2 {
 			if(renderView.moscas.size() < 6) {
 				// for(int i = 0; i < 6; i++) {
 					int i = new Random().nextInt(10);;
-					Mosca m = new Mosca(this.renderView.getContext());
+					final Mosca m = new Mosca(this.renderView.getContext());
 					if((i % 3) == 0) m.setStatus(SkinType.VOANDO_D);
 					else m.setStatus(SkinType.VOANDO_E);
-					renderView.moscas.add(m);
+					handler.post( new Runnable() {
+						public void run() {
+							renderView.moscas.add(m);
+						}
+					});
+
 				// }
 			}
 
