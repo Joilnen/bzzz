@@ -1,3 +1,9 @@
+/**************************************************
+ *
+ *  Autor: Joilnen Leite
+ *
+ *************************************************/
+
 package com.joilnen;
 
 import android.app.Activity;
@@ -183,6 +189,8 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 					menuView = new MenuView(this);
 					menuView.setOnTouchListener(this);
 					setContentView(menuView);
+					renderView2.onTouch(v, event);
+					renderView2.pause();
 					renderView2 = null;
 					onResume();
 					return true;
@@ -382,6 +390,17 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		public boolean onTouch(View v, MotionEvent event) {
 
 			// try { Thread.sleep(16); } catch (Exception e) {  }
+			if(event.getAction() == MotionEvent.ACTION_CANCEL) {
+				try {
+					thread.join();
+					thread.interrupt();
+				}
+				catch(InterruptedException e) {
+				
+				}
+				return true;
+			}
+
 			return new EventCatchHelper2(this, event).doCatch();
 		}
 
