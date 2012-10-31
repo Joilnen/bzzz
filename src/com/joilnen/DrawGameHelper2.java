@@ -29,8 +29,8 @@ class  DrawGameHelper2 {
 	}
 
 	public void draw(Canvas canvas) {
-		canvas.drawRGB(255, 255, 255);
 		try {
+			canvas.drawRGB(255, 255, 255);
 			canvas.drawBitmap(renderView.bolo.getBitmap(), 10, 310, null);
 			for(Mosca it:renderView.moscas) {
 				if(it.getY() < 450)
