@@ -316,9 +316,9 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		public RenderView2(Context context) {
 
 			super(context);
-			holder = getHolder();
 
 			try {
+				holder = getHolder();
 				for(int i = 0; i < 6; i++) {
 					Mosca m = new Mosca(context);
 					if((i % 3) == 0) m.setStatus(SkinType.VOANDO_D);
@@ -347,13 +347,13 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 				***/
 
 				bolo = new Bolo(context);
+ 				gameState = new GameState<Integer>(GameStateType.IN_MENU);
+				drawHelper2 = new DrawGameHelper2(this);
+
 			}
 			catch(Exception e) {
 				Log.d("Bzzz", "Nao consegui instanciar a moscas");
 			}
-
-			gameState = new GameState<Integer>(GameStateType.IN_MENU);
-			drawHelper2 = new DrawGameHelper2(this);
 		}
 
 		public void resume() {
