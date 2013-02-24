@@ -1,6 +1,6 @@
 package com.joilnen;
 
-import com.joilnen.Bzzz.RenderView2;
+import com.joilnen.Bzzz.RenderView;
 import com.joilnen.SoundEfect;
 
 import android.view.MotionEvent;
@@ -10,12 +10,12 @@ import android.hardware.SensorEvent;
 
 class EventCatchHelper2 {
 
-	private RenderView2 renderView;
+	private RenderView renderView;
 	private MotionEvent motionEvent;
 	private SensorEvent sensorEvent;
 	private Context context;
 
-	public EventCatchHelper2(RenderView2 renderView, MotionEvent motionEvent) {
+	public EventCatchHelper2(RenderView renderView, MotionEvent motionEvent) {
 		this.renderView = renderView;
 		this.motionEvent = motionEvent;
 		this.context = renderView.getContext();

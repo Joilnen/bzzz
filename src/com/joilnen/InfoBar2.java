@@ -1,6 +1,6 @@
 package com.joilnen;
 
-import com.joilnen.Bzzz.RenderView2;
+import com.joilnen.Bzzz.RenderView;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
@@ -13,9 +13,9 @@ class InfoBar2 {
 	private int cakeState = 100;
 	private Typeface font;
 
-	private RenderView2 renderView;
+	private RenderView renderView;
 
-	public InfoBar2(RenderView2 renderView) {
+	public InfoBar2(RenderView renderView) {
 		this.renderView = renderView;
 		this.font = Typeface.createFromAsset(renderView.getContext().getAssets(), "font.ttf");
 	}

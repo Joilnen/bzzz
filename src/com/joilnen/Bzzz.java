@@ -52,73 +52,11 @@ import java.util.List;
 
 public class Bzzz extends Activity implements OnTouchListener, SensorEventListener
 {
-	RenderView renderView = null;
 	MenuView menuView = null;
-	DrawGameHelper drawHelper = null;
 
-	RenderView2 renderView2 = null;
-	DrawGameHelper2 drawHelper2 = null;
+	RenderView renderView2 = null;
+	DrawGameHelper drawHelper2 = null;
 
-	public  class RenderView extends View implements OnTouchListener {
-
-		List<Mosca> moscas = Collections.synchronizedList(new LinkedList<Mosca>());
-		List<BigMosca> big_moscas = new LinkedList<BigMosca>();
-		List<MoscaAgulha> moscas_agulha = new LinkedList<MoscaAgulha>();
-		List<MoscaOndular> moscas_ondular = new LinkedList<MoscaOndular>();
-
-		Bolo bolo;
-
-		// Implementado usando memento para p3
-		GameState<Integer> gameState;
-		// Implementado usando singleton para p3 (opcoes do usuario tipo sem som essas coisas)
-		StatOption options;
-
-		RenderView(Context context) {
-			super(context);
-			try {
-				for(int i = 0; i < 6; i++) {
-					Mosca m = new Mosca(context);
-					if((i % 3) == 0) m.setStatus(SkinType.VOANDO_D);
-					else m.setStatus(SkinType.VOANDO_E);
-					moscas.add(m);
-				}
-				big_moscas.add(new BigMosca(context));
-				big_moscas.add(new BigMosca(context));
-				big_moscas.get(1).setStatus(SkinType.VOANDO_D);
-
-				moscas_agulha.add(new MoscaAgulha(context));
-				moscas_agulha.add(new MoscaAgulha(context));
-				moscas_agulha.get(1).setStatus(SkinType.VOANDO_D);
-
-				moscas_ondular.add(new MoscaOndular(context));
-				moscas_ondular.add(new MoscaOndular(context));
-				moscas_ondular.get(1).setStatus(SkinType.VOANDO_D);
-
-				bolo = new Bolo(context);
-			}
-			catch(Exception e) {
-				Log.d("Bzzz", "Nao consegui instanciar a moscas");
-			}
-
-			gameState = new GameState<Integer>(GameStateType.IN_MENU);
-			drawHelper = new DrawGameHelper(this);
-		}
-
-		protected void onDraw(Canvas canvas) {
-			drawHelper.draw(canvas);
-			invalidate();
-		}
-
-		public boolean onTouch(View v, MotionEvent event) {
-
-			// try { Thread.sleep(16); } catch (Exception e) {  }
-			return new EventCatchHelper(this, event).doCatch();
-		}
-
-		public void onSensorChanged(SensorEvent event) {
-			new EventCatchHelper(this, event).doCatch();
-		}
-	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -129,7 +67,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		menuView.setOnTouchListener(this);
 		setContentView(menuView);
 		/***
-		renderView2 = new RenderView2(this);
+		renderView2 = new RenderView(this);
 		renderView2.setOnTouchListener(this);
 		setContentView(renderView2);
 		***/
@@ -163,7 +101,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 			   event.getY() < menuView.jogar_y + menuView.jogarBitmap.getHeight() - 10) {
 				SoundEfect.getSingleton(v.getContext()).play(SoundEfectType.PLUK);
 
-				renderView2 = new RenderView2(this);
+				renderView2 = new RenderView(this);
 				renderView2.setOnTouchListener(this);
 				setContentView(renderView2);
 				menuView = null;
@@ -200,7 +138,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 	}
 
 	public void onSensorChanged(SensorEvent event) {
-		renderView.onSensorChanged(event);
+		// renderView2.onSensorChanged(event);
 	}
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -293,7 +231,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		}
 	}
 
-	class RenderView2 extends SurfaceView implements Runnable, OnTouchListener {
+	class RenderView extends SurfaceView implements Runnable, OnTouchListener {
 
 		Thread thread = null;
 		SurfaceHolder holder;
@@ -313,7 +251,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		// Implementado usando singleton para p3 (opcoes do usuario tipo sem som essas coisas)
 		StatOption options;
 
-		public RenderView2(Context context) {
+		public RenderView(Context context) {
 
 			super(context);
 
@@ -348,7 +286,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 				bolo = new Bolo(context);
  				gameState = new GameState<Integer>(GameStateType.IN_MENU);
-				drawHelper2 = new DrawGameHelper2(this);
+				drawHelper2 = new DrawGameHelper(this);
 
 			}
 			catch(Exception e) {
