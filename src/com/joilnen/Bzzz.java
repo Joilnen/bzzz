@@ -236,7 +236,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		Thread thread = null;
 		SurfaceHolder holder;
 		Bitmap frameBuffer;
-		volatile boolean running = false;
+		private volatile boolean running = false;
 
 		// List<Mosca> moscas = Collections.synchronizedList(new LinkedList<Mosca>());
 		List<Mosca> moscas = new LinkedList<Mosca>();
@@ -250,6 +250,7 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		GameState<Integer> gameState;
 		// Implementado usando singleton para p3 (opcoes do usuario tipo sem som essas coisas)
 		StatOption options;
+        private EventCatchHelper2 eventCatchHelper = new EventCatchHelper2(this);
 
 		public RenderView(Context context) {
 
@@ -305,7 +306,8 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 			while(true) {
 				try {
 					thread.join();
-					break;
+                    wait();
+                    break;
 				}
 				catch(InterruptedException e) {
 				
@@ -315,13 +317,13 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 		public void run() {
 			while(running) {
-				if(!holder.getSurface().isValid())
+				if(holder.getSurface().isValid())
 					continue;
-				Canvas canvas = holder.lockCanvas();
-				// canvas.getClipBounds(dstRect);
-				drawHelper2.draw(canvas);
-				// drawHelper2.drawBound(canvas, dstRect); still to implements
-				holder.unlockCanvasAndPost(canvas);
+                Canvas canvas = holder.lockCanvas();
+                // canvas.getClipBounds(dstRect);
+                drawHelper2.draw(canvas);
+                // drawHelper2.drawBound(canvas, dstRect); still to implements
+                holder.unlockCanvasAndPost(canvas);
 			}
 		}
 
@@ -329,6 +331,9 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 			// try { Thread.sleep(16); } catch (Exception e) {  }
 			if(event.getAction() == MotionEvent.ACTION_CANCEL) {
+                pause();
+
+                /****
 				try {
 					thread.join();
 					thread.interrupt();
@@ -336,12 +341,13 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 				catch(InterruptedException e) {
 				
 				}
+                ****/
+
 				return true;
 			}
 
-			return new EventCatchHelper2(this, event).doCatch();
+			return eventCatchHelper.doCatch(event);
 		}
-
 	}
 }
 

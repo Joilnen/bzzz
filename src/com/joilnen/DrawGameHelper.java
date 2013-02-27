@@ -19,7 +19,7 @@ class  DrawGameHelper {
 	private RenderView renderView;
 	private InfoBar2 infoBar;
 	private static long start_elapsed_time = System.currentTimeMillis();
-	private static int ELAPSED_TIME = 20;
+	private static int ELAPSED_TIME = 50;
 	private Handler handler = new Handler();
 
 	public DrawGameHelper(RenderView renderView) {
@@ -29,9 +29,12 @@ class  DrawGameHelper {
 
 	public void draw(Canvas canvas) {
 		try {
+
 			canvas.drawRGB(255, 255, 255);
 			canvas.drawBitmap(renderView.bolo.getBitmap(), 10, 310, null);
+
 			for(Mosca it:renderView.moscas) {
+
 				if(it.getY() < 450)
 					it.move();
 				else {
@@ -41,6 +44,7 @@ class  DrawGameHelper {
 					else
 						it.setStatus(SkinType.POUSADA_E);
 				}
+
 				canvas.drawBitmap(it.getBitmap(), it.getX(), it.getY(), null);
 			}
 
@@ -118,6 +122,7 @@ class  DrawGameHelper {
 			}
 
 			infoBar.draw(canvas);
+            infoBar.incrementHeathCount(1);
 		}
 		catch(Exception e) {
 			Log.d("Bzzz", "Nao consegui mover a mosca");

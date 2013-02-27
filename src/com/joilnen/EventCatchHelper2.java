@@ -15,13 +15,12 @@ class EventCatchHelper2 {
 	private SensorEvent sensorEvent;
 	private Context context;
 
-	public EventCatchHelper2(RenderView renderView, MotionEvent motionEvent) {
+	public EventCatchHelper2(RenderView renderView) {
 		this.renderView = renderView;
-		this.motionEvent = motionEvent;
 		this.context = renderView.getContext();
 	}
 
-	public boolean doCatch() {
+	public boolean doCatch(MotionEvent motionEvent) {
 
 		switch(motionEvent.getAction()) {
 		    case MotionEvent.ACTION_UP:
@@ -48,7 +47,7 @@ class EventCatchHelper2 {
 		return true;
 	}
 
-	public void doSensorCatch() {
+	public void doSensorCatch(MotionEvent motionEventCatch) {
 		for(Mosca it:renderView.moscas) {
 			if(it.getY() >= 450)
 				it.setPosY(449);
