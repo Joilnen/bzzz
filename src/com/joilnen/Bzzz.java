@@ -306,7 +306,6 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 			while(true) {
 				try {
 					thread.join();
-                    wait();
                     break;
 				}
 				catch(InterruptedException e) {
@@ -317,13 +316,13 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 
 		public void run() {
 			while(running) {
-				if(holder.getSurface().isValid())
-					continue;
-                Canvas canvas = holder.lockCanvas();
-                // canvas.getClipBounds(dstRect);
-                drawHelper2.draw(canvas);
-                // drawHelper2.drawBound(canvas, dstRect); still to implements
-                holder.unlockCanvasAndPost(canvas);
+				if(holder.getSurface().isValid()) {
+                    Canvas canvas = holder.lockCanvas();
+                    // canvas.getClipBounds(dstRect);
+                    drawHelper2.draw(canvas);
+                    // drawHelper2.drawBound(canvas, dstRect); still to implements
+                    holder.unlockCanvasAndPost(canvas);
+                }
 			}
 		}
 
