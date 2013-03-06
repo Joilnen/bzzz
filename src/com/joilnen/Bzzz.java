@@ -197,20 +197,23 @@ public class Bzzz extends Activity implements OnTouchListener, SensorEventListen
 		}
 
 		protected void onDraw(Canvas canvas) {
+
 			if(menuBitmap != null) {
-				Rect dst = new Rect(0, 0, canvas.getWidth() - 1, canvas.getHeight() - 1);
+                int w = getWindowManager().getDefaultDisplay().getWidth();
+                int h = getWindowManager().getDefaultDisplay().getHeight();
+				Rect dst = new Rect(0, 0, w - 1, h - 1);
 				canvas.drawBitmap(menuBitmap, null, dst, null); 
 
-				jogar_x = canvas.getWidth() / 6 + 20;
-				jogar_y = canvas.getHeight() / 2 - 30; 
+				jogar_x = w / 6 + 20;
+				jogar_y = h / 2 - 30; 
 				dst.top = jogar_y;
 				dst.left = jogar_x;
 				dst.bottom = jogar_y + jogarBitmap.getHeight() - 10;
 				dst.right = jogar_x + jogarBitmap.getWidth() - 20;
 				canvas.drawBitmap(jogarBitmap, null, dst, null);
 
-				sair_x = canvas.getWidth() / 6 + 45;
-				sair_y = canvas.getHeight() / 3 * 2 - 30;
+				sair_x = w / 6 + 45;
+				sair_y = h / 3 * 2 - 30;
 				dst.top = sair_y;
 				dst.left = sair_x;
 				dst.bottom = sair_y + sairBitmap.getHeight() - 10;
